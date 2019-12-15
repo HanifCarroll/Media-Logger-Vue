@@ -118,9 +118,7 @@ export default {
         });
     },
     onChange() {
-      console.log('outside');
       if (this.searchValue === '') {
-        console.log('inside');
         this.searchResults = [];
       }
     },
