@@ -1,7 +1,7 @@
 <template>
   <q-page class="">
     <div class="q-pa-md">
-      <q-input outlined v-model="searchValue" label="Search" @change="onSearch"/>
+      <q-input outlined v-model="searchValue" label="Search" @keyup.enter="onSearch"/>
       <br>
       <q-table
         :data="getData()"
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     getData() {
-      return this.searchValue ? this.searchResults : this.data;
+      return this.searchValue && this.searchResults.length ? this.searchResults : this.data;
     },
     onSearch() {
       this.$search(this.searchValue, this.data, this.searchOptions)
