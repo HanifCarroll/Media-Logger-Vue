@@ -29,6 +29,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 export default {
   name: 'PageIndex',
@@ -100,6 +101,7 @@ export default {
           label: 'Time Posted',
           sortable: true,
           align: 'left',
+          format: val => moment(val).format('MMM Do YYYY'),
         },
       ],
       pagination: {
