@@ -110,7 +110,7 @@ export default {
           label: 'Time Posted',
           sortable: true,
           align: 'left',
-          format: val => moment(val).format('MMM Do YYYY'),
+          format: val => moment(val).format('MM/DD/YY hh:mm A'),
         },
       ],
       pagination: {
