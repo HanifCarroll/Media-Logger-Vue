@@ -1,8 +1,10 @@
 <template>
   <q-page class="">
     <div class="q-pa-md">
+      <q-input outlined v-model="searchValue" label="Search" @change="onSearch"/>
+      <br>
       <q-table
-        :data="data"
+        :data="getData()"
         :columns="columns"
         row-key="name"
         :pagination.sync="pagination"
@@ -26,14 +28,28 @@
 
 <script>
 import axios from 'axios';
-import { mockData } from '../assets/mock-data';
 
 export default {
   name: 'PageIndex',
 
   data() {
     return {
-      data: mockData.map(data => data.fields),
+      data: [],
+      searchValue: '',
+      searchResults: [],
+      searchOptions: {
+        threshold: 0.3,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: [
+          'title',
+          'artist',
+          'user',
+          'service',
+        ],
+      },
       columns: [
         {
           name: 'thumbnail',
@@ -89,6 +105,17 @@ export default {
         rowsPerPage: 10,
       },
     };
+  },
+  methods: {
+    getData() {
+      return this.searchValue ? this.searchResults : this.data;
+    },
+    onSearch() {
+      this.$search(this.searchValue, this.data, this.searchOptions)
+        .then((results) => {
+          this.searchResults = results;
+        });
+    },
   },
   mounted() {
     axios
