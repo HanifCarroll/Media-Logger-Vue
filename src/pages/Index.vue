@@ -1,10 +1,18 @@
 <template>
-  <q-page class="">
+  <q-page>
     <div class="q-pa-md">
       <q-input outlined v-model="searchValue" label="Search"
                @keyup.enter="onSearch" @keypress="onChange"/>
       <br>
+      <div v-if="!isLoaded" class="row justify-center items-center" style="height: 60vh">
+        <q-spinner
+          color="primary"
+          size="3em"
+          :thickness="10"
+        />
+      </div>
       <q-table
+        v-if="isLoaded"
         :data="getData()"
         :columns="columns"
         row-key="name"
@@ -36,6 +44,7 @@ export default {
 
   data() {
     return {
+      isLoaded: false,
       data: [],
       searchValue: '',
       searchResults: [],
@@ -129,6 +138,7 @@ export default {
     axios
       .get('https://media-logger-server.herokuapp.com/logger')
       .then((res) => {
+        this.isLoaded = true;
         this.data = res.data.map(data => data.fields);
       });
   },
