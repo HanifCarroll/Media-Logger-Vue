@@ -1,7 +1,8 @@
 <template>
   <q-page class="">
     <div class="q-pa-md">
-      <q-input outlined v-model="searchValue" label="Search" @keyup.enter="onSearch"/>
+      <q-input outlined v-model="searchValue" label="Search"
+               @keyup.enter="onSearch" @keypress="onChange"/>
       <br>
       <q-table
         :data="getData()"
@@ -115,6 +116,13 @@ export default {
         .then((results) => {
           this.searchResults = results;
         });
+    },
+    onChange() {
+      console.log('outside');
+      if (this.searchValue === '') {
+        console.log('inside');
+        this.searchResults = [];
+      }
     },
   },
   mounted() {
