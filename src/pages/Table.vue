@@ -20,14 +20,27 @@
       >
         <template v-slot:body-cell-thumbnail="props" >
           <q-td class="text-left">
-            <q-avatar v-if="props.value" square>
-              <img :src="props.value" />
-            </q-avatar>
+            <a :href="props.row.url">
+              <q-img v-if="props.value" :src="props.value" :ratio="16/9"/>
+            </a>
           </q-td>
         </template>
-        <template v-slot:body-cell-url="props" >
+        <template v-slot:body-cell-artist="props" >
           <q-td class="text-left">
-            <a :href="props.value" style="color: black; text-decoration: none">{{ props.value }}</a>
+            <a v-if="props.row.authorUrl"
+               :href="props.row.authorUrl"
+               style="color: black; text-decoration: none"
+            >
+              {{ props.value }}
+            </a>
+            <span v-else>{{ props.value }}</span>
+          </q-td>
+        </template>
+        <template v-slot:body-cell-title="props" >
+          <q-td class="text-left">
+            <a :href="props.row.url" style="color: black; text-decoration: none">
+              {{ props.value }}
+            </a>
           </q-td>
         </template>
       </q-table>
@@ -100,7 +113,7 @@ export default {
           label: 'Time Posted',
           sortable: true,
           align: 'left',
-          format: val => moment(val).format('MM/DD/YY hh:mm A'),
+          format: val => moment(parseInt(val, 10)).format('MM/DD/YY hh:mm A'),
         },
       ],
       pagination: {
