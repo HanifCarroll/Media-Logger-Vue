@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import * as axios from 'axios';
+
 export default {
   name: 'PageRegister',
 
@@ -67,12 +69,32 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$q.notify({
-        color: 'green-4',
-        textColor: 'white',
-        icon: 'cloud_done',
-        message: 'Submitted',
-      });
+      const user = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      };
+      axios.post('http://localhost:3000/auth/register', user)
+        .then((res) => {
+          console.log('res', res.data);
+
+          this.$q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'person_add',
+            message: 'Account Created',
+          });
+        })
+        .catch((err) => {
+          console.log('err', err);
+
+          this.$q.notify({
+            color: 'red-4',
+            textColor: 'white',
+            icon: 'person_add_disabled',
+            message: 'User already exists.',
+          });
+        });
     },
 
     onReset() {
