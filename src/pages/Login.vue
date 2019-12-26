@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'PageIndex',
+  name: 'PageLogin',
 
   data() {
     return {

@@ -1,20 +1,86 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <h1>Register</h1>
+      <h4>Register</h4>
+      <q-form
+        @submit="onSubmit"
+        @reset="onReset"
+        class="q-gutter-md"
+      >
+        <q-input
+          filled
+          type="text"
+          v-model="username"
+          label="Username *"
+          lazy-rules
+          :rules="[ val => val && val.length >= 4 || 'Username must be 4 characters or more.']"
+        />
+
+        <q-input
+          filled
+          type="email"
+          v-model="email"
+          label="Email *"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Please type something']"
+        />
+
+        <q-input
+          filled
+          type="password"
+          v-model="password"
+          label="Password *"
+          lazy-rules
+          :rules="[ val => val && val.length >= 4 || 'Password must be 4 characters or more.']"
+        />
+
+        <q-input
+          filled
+          type="password"
+          v-model="passwordConfirm"
+          label="Password Confirmation *"
+          :rules="[
+          val => val === this.password || 'Passwords must match.',
+        ]"
+        />
+
+        <div>
+          <q-btn label="Submit" type="submit" color="primary"/>
+          <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        </div>
+      </q-form>
     </div>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: 'PageIndex',
+  name: 'PageRegister',
 
   data() {
     return {
+      username: null,
+      email: null,
+      password: null,
+      passwordConfirm: null,
     };
   },
   methods: {
+    onSubmit() {
+      this.$q.notify({
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'cloud_done',
+        message: 'Submitted',
+      });
+    },
+
+    onReset() {
+      this.username = null;
+      this.email = null;
+      this.password = null;
+      this.passwordConfirm = null;
+    },
   },
 };
 </script>
