@@ -41,10 +41,9 @@ export default {
   actions: {
     loadTableData({ commit }) {
       commit('SET_IS_LOADING', true);
-      axios.get('https://media-logger-server.herokuapp.com/logger')
+      axios.get('http://localhost:3000/media')
         .then((res) => {
-          const tableData = res.data.map(data => data.fields);
-          commit('SET_TABLE_DATA', tableData);
+          commit('SET_TABLE_DATA', res.data);
         })
         .catch((err) => {
           console.warn('err', err);

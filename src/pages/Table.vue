@@ -62,14 +62,13 @@ export default {
       columns: [
         {
           name: 'thumbnail',
-          field: 'thumbnail_url',
+          field: 'thumbnailUrl',
           label: 'Thumbnail',
-          sortable: true,
           align: 'left',
         },
         {
           name: 'artist',
-          field: 'artist',
+          field: 'authorName',
           label: 'Artist',
           sortable: true,
           align: 'left',
@@ -82,16 +81,9 @@ export default {
           align: 'left',
         },
         {
-          name: 'url',
-          field: 'url',
-          label: 'URL',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'user',
-          field: 'user',
-          label: 'User',
+          name: 'postedBy',
+          field: 'postedBy',
+          label: 'Posted By',
           sortable: true,
           align: 'left',
         },
@@ -104,7 +96,7 @@ export default {
         },
         {
           name: 'time',
-          field: 'time_posted',
+          field: 'timePosted',
           label: 'Time Posted',
           sortable: true,
           align: 'left',
