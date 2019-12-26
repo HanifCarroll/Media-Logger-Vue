@@ -4,7 +4,7 @@
       <q-input outlined v-model="searchValue" label="Search"
                @keyup.enter="onSearch" @keypress="onChange"/>
       <br>
-      <div v-if="!isLoaded" class="row justify-center items-center" style="height: 60vh">
+      <div v-if="isLoading" class="row justify-center items-center" style="height: 60vh">
         <q-spinner
           color="primary"
           size="3em"
@@ -12,7 +12,7 @@
         />
       </div>
       <q-table
-        v-if="isLoaded"
+        v-if="!isLoading"
         :data="getData()"
         :columns="columns"
         row-key="name"
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapState } from 'vuex';
 import moment from 'moment';
 
 export default {
@@ -44,8 +44,6 @@ export default {
 
   data() {
     return {
-      isLoaded: false,
-      data: [],
       searchValue: '',
       searchResults: [],
       searchOptions: {
@@ -118,29 +116,36 @@ export default {
       },
     };
   },
+
   methods: {
     getData() {
-      return this.searchValue && this.searchResults.length ? this.searchResults : this.data;
+      return this.searchValue && this.searchResults.length ? this.searchResults : this.tableData;
     },
+
     onSearch() {
-      this.$search(this.searchValue, this.data, this.searchOptions)
+      this.$search(this.searchValue, this.tableData, this.searchOptions)
         .then((results) => {
           this.searchResults = results;
         });
     },
+
     onChange() {
       if (this.searchValue === '') {
         this.searchResults = [];
       }
     },
   },
+
   mounted() {
-    axios
-      .get('https://media-logger-server.herokuapp.com/logger')
-      .then((res) => {
-        this.isLoaded = true;
-        this.data = res.data.map(data => data.fields);
-      });
+    this.$store.dispatch('table/loadTableData');
+  },
+
+  computed: {
+    ...mapState('table', [
+      'tableData',
+      'isLoading',
+      'isError',
+    ]),
   },
 };
 </script>
