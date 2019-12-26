@@ -72,6 +72,11 @@ export default {
           'service',
         ],
       },
+      pagination: {
+        rowsPerPage: 10,
+        sortBy: 'time',
+        descending: true,
+      },
       columns: [
         {
           name: 'thumbnail',
@@ -113,12 +118,9 @@ export default {
           label: 'Time Posted',
           sortable: true,
           align: 'left',
-          format: val => moment(parseInt(val, 10)).format('MM/DD/YY hh:mm A'),
+          format: val => moment(val).format('MM/DD/YY hh:mm A'),
         },
       ],
-      pagination: {
-        rowsPerPage: 10,
-      },
     };
   },
 
