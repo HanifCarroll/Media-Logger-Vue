@@ -64,5 +64,10 @@ export default {
           });
       });
     },
+
+    logout({ commit }) {
+      commit('SET_TOKEN', null);
+      commit('SET_IS_LOGGED_IN', false);
+    },
   },
 };
