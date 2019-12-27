@@ -1,6 +1,4 @@
 import * as axios from 'axios';
-import { Notify } from 'quasar';
-import Router from '../../router';
 
 function jwtDecode(t) {
   const token = {};
@@ -49,27 +47,22 @@ export default {
   actions: {
     login({ commit }, user) {
       commit('SET_IS_LOADING', true);
-      axios.post('http://localhost:3000/auth/login', user)
-        .then((res) => {
-          const decoded = jwtDecode(res.data.access_token);
-          commit('SET_TOKEN', decoded);
-          commit('SET_IS_LOGGED_IN', true);
-          Router.push('/table');
-        })
-        .catch((err) => {
-          console.warn('err', err);
-          commit('SET_IS_ERROR', true);
-          Notify.create({
-            color: 'red-4',
-            textColor: 'white',
-            icon: 'error',
-            message: 'Something went wrong.',
-            timeout: 2000,
+      return new Promise((resolve, reject) => {
+        axios.post('http://localhost:3000/auth/login', user)
+          .then((res) => {
+            const decoded = jwtDecode(res.data.access_token);
+            commit('SET_TOKEN', decoded);
+            commit('SET_IS_LOGGED_IN', true);
+            resolve();
+          })
+          .catch((err) => {
+            commit('SET_IS_ERROR', true);
+            reject(err);
+          })
+          .finally(() => {
+            commit('SET_IS_LOADING', false);
           });
-        })
-        .finally(() => {
-          commit('SET_IS_LOADING', false);
-        });
+      });
     },
   },
 };

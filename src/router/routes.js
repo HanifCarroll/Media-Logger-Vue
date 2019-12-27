@@ -1,3 +1,5 @@
+import store from '../store';
+
 const routes = [
   {
     path: '/',
@@ -10,8 +12,10 @@ const routes = [
         path: 'table',
         component: () => import('pages/Table.vue'),
         beforeEnter: (to, from, next) => {
-          const store = require('../store');
-          return store.default.state.auth.isLoggedIn ? next() : next('/login');
+          if (store.state.auth.isLoggedIn) {
+            return next();
+          }
+          return next('/login');
         },
       },
     ],

@@ -46,7 +46,20 @@ export default {
         password: this.password,
       };
 
-      this.$store.dispatch('auth/login', user);
+      this.$store.dispatch('auth/login', user)
+        .then(() => {
+          this.$router.push('/table');
+        })
+        .catch((err) => {
+          console.warn('err', err);
+          this.$q.notify({
+            color: 'red-4',
+            textColor: 'white',
+            icon: 'error',
+            message: 'Something went wrong.',
+            timeout: 2000,
+          });
+        });
     },
   },
 };
