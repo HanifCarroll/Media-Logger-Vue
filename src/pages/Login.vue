@@ -29,40 +29,40 @@
 </template>
 
 <script>
-import * as axios from 'axios';
-
 export default {
   name: 'PageLogin',
 
   data() {
     return {
-      username: null,
-      password: null,
+      username: 'hanif',
+      password: 'password',
     };
   },
   methods: {
-    onSubmit() {
+    onSubmit(e) {
+      e.preventDefault();
       const user = {
         username: this.username,
         password: this.password,
       };
 
-      axios.post('http://localhost:3000/auth/login', user)
-        .then((res) => {
-          console.log('res', res.data);
-
-          this.$router.push({ path: '/table' });
-        })
-        .catch((err) => {
-          console.log('err', err);
-
-          this.$q.notify({
-            color: 'red-4',
-            textColor: 'white',
-            icon: 'error',
-            message: 'Incorrect credentials.',
-          });
-        });
+      this.$store.dispatch('auth/login', user);
+      // axios.post('http://localhost:3000/auth/login', user)
+      //   .then((res) => {
+      //     console.log('res', res.data);
+      //
+      //     this.$router.push({ path: '/table' });
+      //   })
+      //   .catch((err) => {
+      //     console.log('err', err);
+      //
+      //     this.$q.notify({
+      //       color: 'red-4',
+      //       textColor: 'white',
+      //       icon: 'error',
+      //       message: 'Incorrect credentials.',
+      //     });
+      //   });
     },
   },
 };
