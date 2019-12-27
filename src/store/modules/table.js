@@ -1,5 +1,5 @@
-import * as axios from 'axios';
 import { Notify } from 'quasar';
+import axiosInstance from '../../utils/axiosInstance';
 
 export default {
   namespaced: true,
@@ -41,7 +41,7 @@ export default {
   actions: {
     loadTableData({ commit }) {
       commit('SET_IS_LOADING', true);
-      axios.get('http://localhost:3000/media')
+      axiosInstance.get('http://localhost:3000/media')
         .then((res) => {
           commit('SET_TABLE_DATA', res.data);
         })

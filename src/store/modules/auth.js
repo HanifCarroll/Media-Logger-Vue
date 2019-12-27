@@ -2,8 +2,8 @@ import * as axios from 'axios';
 
 function jwtDecode(t) {
   const token = {};
-  token.raw = t;
   const [header, payload] = t.split('.');
+  token.raw = t;
   token.header = JSON.parse(window.atob(header));
   token.payload = JSON.parse(window.atob(payload));
   return token;
@@ -51,8 +51,11 @@ export default {
         axios.post('http://localhost:3000/auth/login', user)
           .then((res) => {
             const decoded = jwtDecode(res.data.access_token);
+            commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.id });
             commit('SET_TOKEN', decoded);
             commit('SET_IS_LOGGED_IN', true);
+            commit('SET_IS_ERROR', false);
+            localStorage.setItem('auth-token', decoded.raw);
             resolve();
           })
           .catch((err) => {
@@ -68,6 +71,7 @@ export default {
     logout({ commit }) {
       commit('SET_TOKEN', null);
       commit('SET_IS_LOGGED_IN', false);
+      commit('SET_USER', null);
     },
   },
 };

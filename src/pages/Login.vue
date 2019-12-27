@@ -34,8 +34,8 @@ export default {
 
   data() {
     return {
-      username: 'hanif',
-      password: 'password',
+      username: '',
+      password: '',
     };
   },
   methods: {

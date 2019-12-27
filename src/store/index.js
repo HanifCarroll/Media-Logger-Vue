@@ -21,6 +21,7 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: (state, getters, rootState) => rootState.auth.isLoggedIn,
+    authToken: (state, getters, rootState) => rootState.auth.token.raw,
   },
 
   // enable strict mode (adds overhead!)
