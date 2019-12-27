@@ -47,22 +47,6 @@ export default {
       };
 
       this.$store.dispatch('auth/login', user);
-      // axios.post('http://localhost:3000/auth/login', user)
-      //   .then((res) => {
-      //     console.log('res', res.data);
-      //
-      //     this.$router.push({ path: '/table' });
-      //   })
-      //   .catch((err) => {
-      //     console.log('err', err);
-      //
-      //     this.$q.notify({
-      //       color: 'red-4',
-      //       textColor: 'white',
-      //       icon: 'error',
-      //       message: 'Incorrect credentials.',
-      //     });
-      //   });
     },
   },
 };
