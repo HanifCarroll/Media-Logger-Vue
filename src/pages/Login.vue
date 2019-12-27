@@ -50,8 +50,7 @@ export default {
         .then(() => {
           this.$router.push('/table');
         })
-        .catch((err) => {
-          console.warn('err', err);
+        .catch(() => {
           this.$q.notify({
             color: 'red-4',
             textColor: 'white',

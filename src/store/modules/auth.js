@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
 
 function jwtDecode(t) {
   const token = {};
@@ -48,7 +48,7 @@ export default {
     login({ commit }, user) {
       commit('SET_IS_LOADING', true);
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:3000/auth/login', user)
+        axiosInstance.post('/auth/login', user)
           .then((res) => {
             const decoded = jwtDecode(res.data.access_token);
             commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.id });

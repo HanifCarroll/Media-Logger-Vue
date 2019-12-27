@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import * as axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 export default {
   name: 'PageRegister',
@@ -74,10 +74,8 @@ export default {
         email: this.email,
         password: this.password,
       };
-      axios.post('http://localhost:3000/auth/register', user)
-        .then((res) => {
-          console.log('res', res.data);
-
+      axiosInstance.post('/auth/register', user)
+        .then(() => {
           this.$q.notify({
             color: 'green-4',
             textColor: 'white',
@@ -85,9 +83,7 @@ export default {
             message: 'Account Created',
           });
         })
-        .catch((err) => {
-          console.log('err', err);
-
+        .catch(() => {
           this.$q.notify({
             color: 'red-4',
             textColor: 'white',

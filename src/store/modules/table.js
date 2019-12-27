@@ -41,12 +41,11 @@ export default {
   actions: {
     loadTableData({ commit }) {
       commit('SET_IS_LOADING', true);
-      axiosInstance.get('http://localhost:3000/media')
+      axiosInstance.get('/media')
         .then((res) => {
           commit('SET_TABLE_DATA', res.data);
         })
-        .catch((err) => {
-          console.warn('err', err);
+        .catch(() => {
           commit('SET_IS_ERROR', true);
           Notify.create({
             color: 'red-4',
