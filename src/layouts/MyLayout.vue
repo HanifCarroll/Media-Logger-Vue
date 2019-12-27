@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Brahs Media Logger
+          <q-btn to="/table" size="20px" stretch flat label="Brahs Media Logger" />
         </q-toolbar-title>
 
         <q-separator dark vertical />
