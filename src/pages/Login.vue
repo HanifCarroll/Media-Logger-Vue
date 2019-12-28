@@ -10,14 +10,14 @@
           filled
           type="text"
           v-model="username"
-          label="Username *"
+          label="Username"
         />
 
         <q-input
           filled
           type="password"
           v-model="password"
-          label="Password *"
+          label="Password"
         />
 
         <div>
