@@ -2,11 +2,23 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-
         <q-toolbar-title>
-          Brahs Media Logger
+          <q-btn to="/table" size="20px" stretch flat label="Brahs Media Logger" />
         </q-toolbar-title>
 
+        <span v-if="$store.getters.isLoggedIn" style="display: flex">
+          <q-separator dark vertical />
+          <q-btn to="/table" stretch flat label="Table" />
+          <q-separator dark vertical />
+          <q-btn @click="onLogout" stretch flat label="Logout" />
+        </span>
+
+        <span v-else style="display: flex">
+          <q-separator dark vertical />
+          <q-btn to="/login" stretch flat label="Login" />
+          <q-separator dark vertical />
+          <q-btn to="/register" stretch flat label="Register" />
+        </span>
       </q-toolbar>
     </q-header>
 
@@ -23,6 +35,12 @@ export default {
   data() {
     return {
     };
+  },
+  methods: {
+    onLogout() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    },
   },
 };
 </script>
