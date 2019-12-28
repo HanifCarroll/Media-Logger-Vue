@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          <q-btn to="/table" size="20px" stretch flat label="Brahs Media Logger" />
+          <q-btn to="/table" size="20px" stretch flat label="Brahs Media" />
         </q-toolbar-title>
 
         <span v-if="$store.getters.isLoggedIn" style="display: flex">

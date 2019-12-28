@@ -45,6 +45,29 @@ export default {
   },
 
   actions: {
+    register({ commit }, user) {
+      commit('SET_IS_LOADING', true);
+      return new Promise((resolve, reject) => {
+        axiosInstance.post('/auth/register', user)
+          .then((res) => {
+            const decoded = jwtDecode(res.data.access_token);
+            commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.id });
+            commit('SET_TOKEN', decoded);
+            commit('SET_IS_LOGGED_IN', true);
+            commit('SET_IS_ERROR', false);
+            localStorage.setItem('auth-token', decoded.raw);
+            resolve();
+          })
+          .catch((err) => {
+            commit('SET_IS_ERROR', true);
+            reject(err);
+          })
+          .finally(() => {
+            commit('SET_IS_LOADING', false);
+          });
+      });
+    },
+
     login({ commit }, user) {
       commit('SET_IS_LOADING', true);
       return new Promise((resolve, reject) => {

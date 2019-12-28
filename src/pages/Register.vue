@@ -16,14 +16,14 @@
           :rules="[ val => val && val.length >= 4 || 'Username must be 4 characters or more.']"
         />
 
-        <q-input
-          filled
-          type="email"
-          v-model="email"
-          label="Email *"
-          lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Please type something']"
-        />
+<!--        <q-input-->
+<!--          filled-->
+<!--          type="email"-->
+<!--          v-model="email"-->
+<!--          label="Email *"-->
+<!--          lazy-rules-->
+<!--          :rules="[ val => val && val.length > 0 || 'Please type something']"-->
+<!--        />-->
 
         <q-input
           filled
@@ -54,8 +54,6 @@
 </template>
 
 <script>
-import axiosInstance from '../utils/axiosInstance';
-
 export default {
   name: 'PageRegister',
 
@@ -71,11 +69,12 @@ export default {
     onSubmit() {
       const user = {
         username: this.username,
-        email: this.email,
+        // email: this.email,
         password: this.password,
       };
-      axiosInstance.post('/auth/register', user)
+      this.$store.dispatch('auth/register', user)
         .then(() => {
+          this.$router.push('/table');
           this.$q.notify({
             color: 'green-4',
             textColor: 'white',
@@ -95,7 +94,7 @@ export default {
 
     onReset() {
       this.username = null;
-      this.email = null;
+      // this.email = null;
       this.password = null;
       this.passwordConfirm = null;
     },
