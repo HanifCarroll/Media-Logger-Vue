@@ -5,6 +5,7 @@ const app = express();
 
 // Serve the static files from the Vue app
 app.use(express.static(path.join(__dirname, '../dist/spa/statics')));
+app.use(express.static(path.join(__dirname, '../dist/spa')));
 
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname, '../dist/spa/index.html'));
