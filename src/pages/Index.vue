@@ -7,111 +7,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import moment from 'moment';
-
 export default {
   name: 'PageIndex',
 
   data() {
     return {
-      isLoaded: false,
-      data: [],
-      searchValue: '',
-      searchResults: [],
-      searchOptions: {
-        threshold: 0.3,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: [
-          'title',
-          'artist',
-          'user',
-          'service',
-        ],
-      },
-      columns: [
-        {
-          name: 'thumbnail',
-          field: 'thumbnail_url',
-          label: 'Thumbnail',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'artist',
-          field: 'artist',
-          label: 'Artist',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'title',
-          field: 'title',
-          label: 'Title',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'url',
-          field: 'url',
-          label: 'URL',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'user',
-          field: 'user',
-          label: 'User',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'service',
-          field: 'service',
-          label: 'Service',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'time',
-          field: 'time_posted',
-          label: 'Time Posted',
-          sortable: true,
-          align: 'left',
-          format: val => moment(val).format('MM/DD/YY hh:mm A'),
-        },
-      ],
-      pagination: {
-        rowsPerPage: 10,
-      },
     };
   },
   methods: {
-    getData() {
-      return this.searchValue && this.searchResults.length ? this.searchResults : this.data;
-    },
-    onSearch() {
-      this.$search(this.searchValue, this.data, this.searchOptions)
-        .then((results) => {
-          this.searchResults = results;
-        });
-    },
-    onChange() {
-      if (this.searchValue === '') {
-        this.searchResults = [];
-      }
-    },
-  },
-  mounted() {
-    axios
-      .get('https://media-logger-server.herokuapp.com/logger')
-      .then((res) => {
-        this.isLoaded = true;
-        this.data = res.data.map(data => data.fields);
-      });
   },
 };
 </script>

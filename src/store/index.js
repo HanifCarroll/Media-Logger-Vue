@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
-// import example from './module-example'
+import auth from './modules/auth';
+import table from './modules/table';
 
 Vue.use(Vuex);
 
@@ -14,16 +14,17 @@ Vue.use(Vuex);
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      // example
-    },
+export default new Vuex.Store({
+  modules: {
+    auth,
+    table,
+  },
+  getters: {
+    isLoggedIn: (state, getters, rootState) => rootState.auth.isLoggedIn,
+    authToken: (state, getters, rootState) => rootState.auth.token.raw,
+  },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV,
-  });
-
-  return Store;
-}
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: process.env.DEV,
+});

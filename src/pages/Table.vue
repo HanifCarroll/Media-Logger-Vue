@@ -4,7 +4,7 @@
       <q-input outlined v-model="searchValue" label="Search"
                @keyup.enter="onSearch" @keypress="onChange"/>
       <br>
-      <div v-if="!isLoaded" class="row justify-center items-center" style="height: 60vh">
+      <div v-if="isLoading" class="row justify-center items-center" style="height: 60vh">
         <q-spinner
           color="primary"
           size="3em"
@@ -12,7 +12,7 @@
         />
       </div>
       <q-table
-        v-if="isLoaded"
+        v-if="!isLoading"
         :data="getData()"
         :columns="columns"
         row-key="name"
@@ -20,14 +20,27 @@
       >
         <template v-slot:body-cell-thumbnail="props" >
           <q-td class="text-left">
-            <q-avatar v-if="props.value" square>
-              <img :src="props.value" />
-            </q-avatar>
+            <a :href="props.row.url">
+              <q-img v-if="props.value" :src="props.value" :ratio="16/9"/>
+            </a>
           </q-td>
         </template>
-        <template v-slot:body-cell-url="props" >
+        <template v-slot:body-cell-artist="props" >
           <q-td class="text-left">
-            <a :href="props.value" style="color: black; text-decoration: none">{{ props.value }}</a>
+            <a v-if="props.row.authorUrl"
+               :href="props.row.authorUrl"
+               style="color: black; text-decoration: none"
+            >
+              {{ props.value }}
+            </a>
+            <span v-else>{{ props.value }}</span>
+          </q-td>
+        </template>
+        <template v-slot:body-cell-title="props" >
+          <q-td class="text-left">
+            <a :href="props.row.url" style="color: black; text-decoration: none">
+              {{ props.value }}
+            </a>
           </q-td>
         </template>
       </q-table>
@@ -36,16 +49,14 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapState } from 'vuex';
 import moment from 'moment';
 
 export default {
-  name: 'PageIndex',
+  name: 'PageTable',
 
   data() {
     return {
-      isLoaded: false,
-      data: [],
       searchValue: '',
       searchResults: [],
       searchOptions: {
@@ -61,17 +72,21 @@ export default {
           'service',
         ],
       },
+      pagination: {
+        rowsPerPage: 10,
+        sortBy: 'time',
+        descending: true,
+      },
       columns: [
         {
           name: 'thumbnail',
-          field: 'thumbnail_url',
+          field: 'thumbnailUrl',
           label: 'Thumbnail',
-          sortable: true,
           align: 'left',
         },
         {
           name: 'artist',
-          field: 'artist',
+          field: 'authorName',
           label: 'Artist',
           sortable: true,
           align: 'left',
@@ -84,16 +99,9 @@ export default {
           align: 'left',
         },
         {
-          name: 'url',
-          field: 'url',
-          label: 'URL',
-          sortable: true,
-          align: 'left',
-        },
-        {
-          name: 'user',
-          field: 'user',
-          label: 'User',
+          name: 'postedBy',
+          field: 'postedBy',
+          label: 'Posted By',
           sortable: true,
           align: 'left',
         },
@@ -106,41 +114,45 @@ export default {
         },
         {
           name: 'time',
-          field: 'time_posted',
+          field: 'timePosted',
           label: 'Time Posted',
           sortable: true,
           align: 'left',
           format: val => moment(val).format('MM/DD/YY hh:mm A'),
         },
       ],
-      pagination: {
-        rowsPerPage: 10,
-      },
     };
   },
+
   methods: {
     getData() {
-      return this.searchValue && this.searchResults.length ? this.searchResults : this.data;
+      return this.searchValue && this.searchResults.length ? this.searchResults : this.tableData;
     },
+
     onSearch() {
-      this.$search(this.searchValue, this.data, this.searchOptions)
+      this.$search(this.searchValue, this.tableData, this.searchOptions)
         .then((results) => {
           this.searchResults = results;
         });
     },
+
     onChange() {
       if (this.searchValue === '') {
         this.searchResults = [];
       }
     },
   },
+
   mounted() {
-    axios
-      .get('https://media-logger-server.herokuapp.com/logger')
-      .then((res) => {
-        this.isLoaded = true;
-        this.data = res.data.map(data => data.fields);
-      });
+    this.$store.dispatch('table/loadTableData');
+  },
+
+  computed: {
+    ...mapState('table', [
+      'tableData',
+      'isLoading',
+      'isError',
+    ]),
   },
 };
 </script>
