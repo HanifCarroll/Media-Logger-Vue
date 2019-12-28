@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://brahs.media',
+  baseURL: 'https://brahs.media/api',
   // baseURL: 'http://localhost:3000',
   headers: { Authorization: `Bearer ${localStorage.getItem('auth-token')}` },
 });
