@@ -3,7 +3,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: 'https://brahs.media/api',
   // baseURL: 'http://localhost:3000/api',
-  headers: { Authorization: `Bearer ${localStorage.getItem('auth-token')}` },
+  headers: { auth: localStorage.getItem('auth-token') },
 });
 
 axiosInstance.interceptors.response.use(

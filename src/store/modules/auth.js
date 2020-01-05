@@ -48,10 +48,10 @@ export default {
     register({ commit }, user) {
       commit('SET_IS_LOADING', true);
       return new Promise((resolve, reject) => {
-        axiosInstance.post('/auth/register', user)
+        axiosInstance.post('/user', user)
           .then((res) => {
-            const decoded = jwtDecode(res.data.access_token);
-            commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.id });
+            const decoded = jwtDecode(res.data);
+            commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.userId });
             commit('SET_TOKEN', decoded);
             commit('SET_IS_LOGGED_IN', true);
             commit('SET_IS_ERROR', false);
@@ -73,8 +73,8 @@ export default {
       return new Promise((resolve, reject) => {
         axiosInstance.post('/auth/login', user)
           .then((res) => {
-            const decoded = jwtDecode(res.data.access_token);
-            commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.id });
+            const decoded = jwtDecode(res.data);
+            commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.userId });
             commit('SET_TOKEN', decoded);
             commit('SET_IS_LOGGED_IN', true);
             commit('SET_IS_ERROR', false);
