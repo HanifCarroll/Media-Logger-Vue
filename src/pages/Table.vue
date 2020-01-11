@@ -143,7 +143,7 @@ export default {
 
   methods: {
     getData() {
-      return this.searchValue && this.searchResults.length ? this.searchResults : this.tableData;
+      return this.searchValue.length > 1 ? this.searchResults : this.tableData;
     },
 
     onSearch() {
@@ -154,9 +154,7 @@ export default {
     },
 
     onChange() {
-      if (this.searchValue === '') {
-        this.searchResults = [];
-      }
+      this.onSearch();
     },
   },
 

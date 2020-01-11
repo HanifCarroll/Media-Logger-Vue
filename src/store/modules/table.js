@@ -70,6 +70,12 @@ export default {
               case '398475220190756875':
                 data.postedBy = 'Adam';
                 break;
+              case '398789578007379980':
+                data.postedBy = 'Dominic';
+                break;
+              case '322442828913573888':
+                data.postedBy = 'Sagar';
+                break;
               default:
             }
           });
