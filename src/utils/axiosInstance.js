@@ -9,8 +9,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   response => response,
   (error) => {
-    if (error.response.status === 401) {
-      const Router = require('../router').default;
+    const Router = require('../router').default;
+    if (error.response.status === 401 && Router.currentRoute.path !== '/login') {
       Router.push('/login');
     }
   },
