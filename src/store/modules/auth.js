@@ -95,6 +95,7 @@ export default {
       commit('SET_TOKEN', null);
       commit('SET_IS_LOGGED_IN', false);
       commit('SET_USER', null);
+      localStorage.removeItem('auth-token');
     },
   },
 };
