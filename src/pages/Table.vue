@@ -19,14 +19,14 @@
         :pagination.sync="pagination"
       >
         <template v-slot:body-cell-thumbnail="props" >
-          <q-td style="width: 100px" class="text-left">
+          <q-td style="width: 125px" class="text-left">
             <a :href="props.row.url">
               <q-img v-if="props.value" :src="props.value" :ratio="16/9"/>
             </a>
           </q-td>
         </template>
         <template v-slot:body-cell-artist="props" >
-          <q-td auto-width class="text-left">
+          <q-td class="text-left">
             <a v-if="props.row.authorUrl"
                :href="props.row.authorUrl"
                style="color: black; text-decoration: none"
@@ -37,26 +37,26 @@
           </q-td>
         </template>
         <template v-slot:body-cell-title="props" >
-          <q-td auto-width class="text-left">
+          <q-td class="text-left">
             <a :href="props.row.url" style="color: black; text-decoration: none">
               {{ props.value }}
             </a>
           </q-td>
         </template>
         <template v-slot:body-cell-postedBy="props" >
-          <q-td auto-width class="text-left">
+          <q-td class="text-left">
             {{ props.value }}
           </q-td>
         </template>
         <template v-slot:body-cell-service="props" >
-          <q-td auto-width class="text-left">
+          <q-td class="text-left">
             <a :href="props.row.url" style="color: black; text-decoration: none">
               {{ props.value }}
             </a>
           </q-td>
         </template>
         <template v-slot:body-cell-time="props" >
-          <q-td auto-width class="text-left">
+          <q-td class="text-left">
             {{ props.value }}
           </q-td>
         </template>
