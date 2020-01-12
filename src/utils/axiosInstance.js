@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   // baseURL: 'http://localhost:3000/api',
 });
 
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
     config.headers.auth = localStorage.getItem('auth-token');
 

@@ -51,11 +51,11 @@ export default {
         axiosInstance.post('/user', user)
           .then((res) => {
             const decoded = jwtDecode(res.data);
+            localStorage.setItem('auth-token', decoded.raw);
             commit('SET_USER', { username: decoded.payload.username, id: decoded.payload.userId });
             commit('SET_TOKEN', decoded);
             commit('SET_IS_LOGGED_IN', true);
             commit('SET_IS_ERROR', false);
-            localStorage.setItem('auth-token', decoded.raw);
             resolve();
           })
           .catch((err) => {
